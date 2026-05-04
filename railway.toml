@@ -1,0 +1,7 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "npm run dispatcher"
+restartPolicyType = "always"
+restartPolicyMaxRetries = 10

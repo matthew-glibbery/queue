@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Queue",
+  "version": "0.1.0",
+  "description": "Capture browser annotations and send them to the Queue app",
+  "permissions": ["activeTab", "scripting", "storage", "tabs"],
+  "host_permissions": ["http://localhost/*", "http://127.0.0.1/*"],
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_title": "Queue"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*", "http://127.0.0.1/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

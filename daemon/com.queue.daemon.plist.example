@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Queue daemon — launchd service template.
+
+  Setup:
+  1. Compile the daemon:
+       npx esbuild daemon/ccBridge.ts --bundle --platform=node \
+         --outfile=out/daemon/ccBridge.js --external:fsevents
+  2. Copy this file (not the .example) to ~/Library/LaunchAgents/:
+       cp daemon/com.queue.daemon.plist.example \
+          ~/Library/LaunchAgents/com.queue.daemon.plist
+  3. Fill in the three placeholders below (URL, anon key, device ID).
+  4. Register with launchd:
+       launchctl bootstrap gui/$(id -u) \
+         ~/Library/LaunchAgents/com.queue.daemon.plist
+  5. Verify:
+       launchctl list | grep com.queue.daemon   # should show a PID
+       tail -f /tmp/com.queue.daemon.out.log
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.queue.daemon</string>
+  <key>ProgramArguments</key>
+  <array>
+    <!-- Use `which node` to find your node path, e.g. /opt/homebrew/bin/node -->
+    <string>/opt/homebrew/bin/node</string>
+    <!-- Absolute path to your compiled daemon bundle -->
+    <string>/path/to/queue/out/daemon/ccBridge.js</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>SUPABASE_URL</key>
+    <string>https://your-project-ref.supabase.co</string>
+    <key>SUPABASE_ANON_KEY</key>
+    <string>your-supabase-anon-key</string>
+    <!-- Copy from Electron app: DevTools → Application → Local Storage → queue:device_id -->
+    <key>QUEUE_DEVICE_ID</key>
+    <string>your-device-uuid</string>
+  </dict>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/com.queue.daemon.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/com.queue.daemon.err.log</string>
+</dict>
+</plist>

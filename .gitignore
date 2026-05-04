@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Environment — never commit real keys
+.env
+.env.local
+.env.*.local
+
+# Build artifacts — renderer has VITE_ env vars baked in
+out/
+dist/
+dist-electron/
+
+# Compiled extension scripts (run `npm run build:extension` to regenerate)
+extension/background.js
+extension/content.js
+extension/popup/popup.js
+
+# launchd plist — has user paths, device ID, and API keys
+# Use daemon/com.queue.daemon.plist.example as the template
+daemon/com.queue.daemon.plist
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# TypeScript build info
+*.tsbuildinfo
