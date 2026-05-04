@@ -19,6 +19,8 @@ extension/popup/popup.js
 # launchd plist — has user paths, device ID, and API keys
 # Use daemon/com.queue.daemon.plist.example as the template
 daemon/com.queue.daemon.plist
+# start.sh has hardcoded machine-specific paths
+daemon/start.sh
 
 # macOS
 .DS_Store
